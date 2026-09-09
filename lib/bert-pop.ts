@@ -54,6 +54,7 @@ export async function issueVerificationPayload(
   const credentialHash = keccak256(
     stringToBytes(
       JSON.stringify({
+        protocolVersion: verification.protocolVersion,
         action: verification.action,
         nullifier: verification.nullifier,
         signalHash: verification.signalHash,
