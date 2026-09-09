@@ -5,7 +5,12 @@ import type { Address } from "viem";
 import { issueVerificationPayload } from "../../lib/bert-pop.js";
 import { env } from "../../lib/env.js";
 import { assertMethod, handlePreflight, parseJsonBody, sendJson } from "../../lib/http.js";
-import { getNullifierRecord, makeNullifierKey, setNullifierRecord } from "../../lib/store.js";
+import {
+  getNullifierRecord,
+  makeNullifierKey,
+  reserveNullifierRecord,
+  setNullifierRecord,
+} from "../../lib/store.js";
 import { verifyWorldProof } from "../../lib/world.js";
 
 type IssueProofRequest = {
@@ -64,14 +69,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return;
     }
 
-    const payload = await issueVerificationPayload(walletAddress, verifierAddress, verifiedWorldProof);
-
     const nowIso = new Date().toISOString();
-    await setNullifierRecord(nullifierKey, {
+    const nextRecord = {
       walletAddress,
       firstVerifiedAt: existingRecord?.firstVerifiedAt || nowIso,
       lastIssuedAt: nowIso,
-    });
+    };
+
+    if (!existingRecord) {
+      const reserved = await reserveNullifierRecord(nullifierKey, nextRecord);
+      if (!reserved) {
+        const concurrentRecord = await getNullifierRecord(nullifierKey);
+        if (!concurrentRecord) {
+          throw new Error("Nullifier reservation could not be confirmed. Please retry.");
+        }
+
+        if (concurrentRecord.walletAddress.toLowerCase() !== walletAddress.toLowerCase()) {
+          sendJson(res, 409, {
+            error: "This human verification credential is already bound to another wallet in BERT.",
+          });
+          return;
+        }
+      }
+    }
+
+    const payload = await issueVerificationPayload(walletAddress, verifierAddress, verifiedWorldProof);
+
+    // Refresh issue metadata for a wallet that already owns this nullifier.
+    await setNullifierRecord(nullifierKey, nextRecord);
 
     sendJson(res, 200, payload);
   } catch (error) {
