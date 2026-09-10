@@ -15,6 +15,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const body = parseJsonBody<RpSignatureRequest>(req);
     const action = body.action || env.worldAction;
+    if (action !== env.worldAction) {
+      sendJson(res, 400, { error: "World ID action does not match the configured BERT action." });
+      return;
+    }
     const payload = createRpContext(action);
     sendJson(res, 200, payload);
   } catch (error) {
