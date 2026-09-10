@@ -1,14 +1,15 @@
 # Contributing to BERT Backend
 
-This service is a security boundary between World ID, the browser and BERT's on-chain proof-of-personhood verifier. Treat all changes as security-sensitive.
+This service is a security boundary between World ID, the browser and BERT's onchain verification-signing pipeline. Treat all changes as security-sensitive.
 
 ## Pull Requests
 
 1. Branch from the current target branch and do not push directly to protected branches.
 2. Keep verification behavior deterministic: chain ID, verifier address, World action and wallet binding must remain explicit checks.
-3. Never commit private keys, World ID secrets, Redis credentials, API tokens, request payloads containing real proofs, or Vercel environment exports.
-4. Run `npm run typecheck` before opening a pull request.
-5. Describe security impact, expected request/response behavior and any required contract or frontend configuration change.
+3. Never weaken the Arc Testnet Demo guard: it must require explicit opt-in and chain ID `5042002`, and must reject every mainnet deployment.
+4. Never commit private keys, World ID secrets, Redis credentials, API tokens, request payloads containing real proofs, or Vercel environment exports.
+5. Run `npm run typecheck` before opening a pull request.
+6. Describe security impact, expected request/response behavior and any required contract or frontend configuration change.
 
 ## Storage Requirements
 
