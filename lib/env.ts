@@ -39,6 +39,14 @@ function parseInteger(name: string, fallback?: number): number {
   return value;
 }
 
+function parseBoolean(name: string, fallback = false): boolean {
+  const raw = optional(name);
+  if (!raw) return fallback;
+  if (raw === "true") return true;
+  if (raw === "false") return false;
+  throw new Error(`${name} must be true or false`);
+}
+
 function parseEnvironment() {
   const env = optional("WORLD_ENVIRONMENT") || "production";
   if (env !== "production" && env !== "staging" && env !== "sandbox") {
@@ -63,4 +71,6 @@ export const env = {
   nullifierStoreMode: optional("NULLIFIER_STORE_MODE") || "memory",
   redisRestUrl: optional("NULLIFIER_STORE_REDIS_REST_URL"),
   redisRestToken: optional("NULLIFIER_STORE_REDIS_REST_TOKEN"),
+  // Demo proofs are deliberately limited in the handler to Arc Testnet.
+  popDemoEnabled: parseBoolean("POP_DEMO_ENABLED"),
 } as const;

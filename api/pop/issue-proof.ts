@@ -30,6 +30,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const action = body.action || env.worldAction;
     const verifierAddress = (body.verifierAddress || env.popVerifierAddress) as Address;
 
+    if (action !== env.worldAction) {
+      sendJson(res, 400, { error: "World ID action does not match the configured BERT action." });
+      return;
+    }
+
     if (!/^0x[a-fA-F0-9]{40}$/.test(body.walletAddress)) {
       sendJson(res, 400, { error: "walletAddress must be a valid EVM address" });
       return;

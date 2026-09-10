@@ -39,7 +39,8 @@ function normalizeProviderId(value: string): Hex {
 export async function issueVerificationPayload(
   walletAddress: Address,
   verifierAddress: Address,
-  verification: WorldVerificationRecord
+  verification: WorldVerificationRecord,
+  options?: { providerId?: string }
 ) {
   const latestNonce = (await publicClient.readContract({
     address: verifierAddress,
@@ -50,7 +51,7 @@ export async function issueVerificationPayload(
 
   const nextNonce = latestNonce + 1n;
   const verifiedUntil = BigInt(Math.floor(Date.now() / 1000) + env.popVerificationWindowSeconds);
-  const provider = normalizeProviderId(env.popProviderId);
+  const provider = normalizeProviderId(options?.providerId || env.popProviderId);
   const credentialHash = keccak256(
     stringToBytes(
       JSON.stringify({
