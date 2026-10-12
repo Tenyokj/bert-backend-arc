@@ -2,6 +2,20 @@
 
 This service is a security boundary between World ID, the browser and BERT's onchain verification-signing pipeline. Treat all changes as security-sensitive.
 
+## Where Help Is Needed
+
+| Contribution area | Current need | Good first contribution |
+| --- | --- | --- |
+| Backend and security engineering | Strict request validation, nonce/expiry handling, durable nullifier storage and safe error behavior | Add a narrowly scoped type or regression test with no secret material. |
+| Protocol QA | Arc Testnet Demo PoP success, expiry, replay and wrong-chain paths | Submit request context with secrets redacted plus the resulting onchain receipt/revert. |
+| Frontend integration | Clear browser-to-backend-to-PoPVerifier failures and recovery UX | Coordinate a change across this repo and `bert-front-arc`. |
+| Auditing | Threat modeling of signer, World ID, CORS and storage boundaries | Use private disclosure for any bypass or credential-impact finding. |
+| Documentation/SMM | Accurate explanation of Demo PoP versus production identity policy | Propose copy that clearly says Demo PoP is test-only and not personhood. |
+
+Coordinate through a focused issue or the public
+[BERT Telegram channel](https://t.me/bertdao). Open-source contributions do not
+imply payment, access to secrets, deployment permission or a token allocation.
+
 ## Pull Requests
 
 1. Branch from the current target branch and do not push directly to protected branches.
