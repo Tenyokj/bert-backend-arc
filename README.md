@@ -1,3 +1,5 @@
+![LOGO](/public/bert-backend-banner.png)
+
 # BERT Backend
 
 Serverless verification-signing service for the BERT Protocol. It issues EIP-712 payloads accepted by the deployed `PoPVerifier` contract.
