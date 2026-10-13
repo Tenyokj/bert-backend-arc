@@ -4,6 +4,8 @@ Serverless verification-signing service for the BERT Protocol. It issues EIP-712
 
 The production endpoint is [bert-backend-arc.vercel.app](https://bert-backend-arc.vercel.app).
 
+The separate [BERT Console V0.1.0 Beta](https://bertdao-console.vercel.app) ([source](https://github.com/Tenyokj/bert-console-arc)) offers read-only Arc Testnet monitoring across V2.3 and V3.1. It does not call this signing service or replace verification and contract checks.
+
 ## Verification Policy
 
 ### Current Arc Testnet
