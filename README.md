@@ -6,7 +6,7 @@ Serverless verification-signing service for the BERT Protocol. It issues EIP-712
 
 The production endpoint is [bert-backend-arc.vercel.app](https://bert-backend-arc.vercel.app).
 
-The separate [BERT Console V0.1.0 Beta](https://bertdao-console.vercel.app) ([source](https://github.com/Tenyokj/bert-console-arc)) offers read-only Arc Testnet monitoring across V2.3 and V3.1. It does not call this signing service or replace verification and contract checks.
+The separate [BERT Console V0.1.0 Beta](https://bertdao-console.vercel.app) ([source](https://github.com/Tenyokj/bert-console-arc)) offers read-only Arc Testnet monitoring across V2.3 and V3.2 (including historical V3.1 Communities). It does not call this signing service or replace verification and contract checks.
 
 ## Verification Policy
 
@@ -99,6 +99,11 @@ Redeploy after changing any Vercel environment variable. A passing health endpoi
 Read [SECURITY.md](./SECURITY.md) before testing or reporting a vulnerability. Use the central [BERT Core private advisory channel](https://github.com/Tenyokj/bert-core-arc/security/advisories/new), never public issues, for security reports.
 
 ## Contributing
+
+For current V2.3/V3.2 rules and known limitations, see the Core
+[current-release guide](https://github.com/Tenyokj/bert-core-arc/blob/arc-usdc-migration/docs/CURRENT-RELEASE.md).
+This backend issues verification attestations; it does not select a round's
+milestone payout mode or approve delivery. Those decisions remain onchain.
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md). External users may fork the repository and open pull requests; only maintainers can merge code or access Vercel and World ID secrets.
 
