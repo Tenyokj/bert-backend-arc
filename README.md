@@ -59,11 +59,16 @@ npx vercel dev --listen 3001
 
 Before starting the server, replace every placeholder in `.env`. The environment parser intentionally fails fast if a required address, private key or 32-byte World signing key is malformed.
 
-Run the type check before opening a pull request:
+Run the isolated regression tests and type check before opening a pull request:
 
 ```bash
+npm test
 npm run typecheck
 ```
+
+The tests use dummy keys and stub external services; they do not load `.env` or
+submit transactions. For dependency updates, known open findings and the limits
+of these checks, see [DEPENDENCY-SECURITY.md](./DEPENDENCY-SECURITY.md).
 
 ## Environment Variables
 
